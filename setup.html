@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Finish setup | Light Dark Color Scheme Toggle</title>
+<style>
+  /* Follows the browser's own scheme, which is the thing this extension is
+     about. No build step, no external assets: CSP blocks them anyway. */
+  :root {
+    color-scheme: light dark;
+    --fg: #1f1f1f;
+    --muted: #5f6368;
+    --bg: #ffffff;
+    --card: #f1f3f4;
+    --line: #dadce0;
+    --accent: #1a73e8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #e8eaed;
+      --muted: #9aa0a6;
+      --bg: #202124;
+      --card: #292a2d;
+      --line: #3c4043;
+      --accent: #8ab4f8;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 3rem 1.5rem 5rem;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 34rem; margin: 0 auto; }
+  h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 .5rem; }
+  .lede { color: var(--muted); margin: 0 0 2rem; }
+  ol { padding-left: 1.25rem; margin: 0; }
+  li { margin-bottom: 1.75rem; }
+  li h2 { font-size: 1rem; margin: 0 0 .4rem; font-weight: 600; }
+  p { margin: 0 0 .6rem; }
+  .hint { color: var(--muted); font-size: .875rem; }
+  code, .copy {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .875rem;
+  }
+  /* The flag URL is too long to sit beside a button on narrow windows, so the
+     button drops below it rather than being pushed off the edge. */
+  .copy {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: .6rem .75rem;
+    margin: .5rem 0;
+  }
+  .copy span {
+    display: block;
+    overflow-x: auto;
+    padding-bottom: .5rem;
+  }
+  button {
+    font: inherit;
+    font-size: .8125rem;
+    padding: .3rem .7rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--accent);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button:hover { border-color: var(--accent); }
+  .note {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .875rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Finish setup</h1>
+  <p class="lede">
+    This extension changes Chrome's color preference. First, enable the
+    Chrome feature that allows the change.
+  </p>
+
+  <ol>
+    <li>
+      <h2>Open Chrome's flags page</h2>
+      <div class="copy">
+        <span>chrome://flags/#enable-experimental-web-platform-features</span>
+        <button data-copy="chrome://flags/#enable-experimental-web-platform-features">Copy</button>
+      </div>
+      <p class="hint">
+        Paste the address into Chrome's address bar. Chrome does not allow
+        links to its internal pages.
+      </p>
+    </li>
+    <li>
+      <h2>Set “Experimental Web Platform features” to Enabled</h2>
+      <p class="hint">The flag is highlighted at the top of that page.</p>
+    </li>
+    <li>
+      <h2>Relaunch Chrome</h2>
+      <p>
+        Select <strong>Relaunch</strong> at the bottom of the flags page.
+        Chrome restores your tabs.
+      </p>
+    </li>
+  </ol>
+
+  <p>
+    The toolbar button now works. The <strong>?</strong> icon disappears.
+  </p>
+
+  <div class="note">
+    <p>
+      <strong>Why is this needed?</strong> The Web Preferences API changes
+      Chrome's <code>prefers-color-scheme</code> setting. Sites then use their
+      own light or dark design. Chrome does not enable this API by default.
+    </p>
+    <p>
+      <strong>Alternative:</strong> If you start Chrome from a terminal, use
+      <code>--enable-features=WebPreferences</code>.
+    </p>
+    <p>
+      The API works only on <code>https://</code> pages. It does not work on
+      <code>http://</code> pages.
+    </p>
+  </div>
+</main>
+
+<script src="setup.js"></script>
+</body>
+</html>
