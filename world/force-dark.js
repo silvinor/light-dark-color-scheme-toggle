@@ -9,15 +9,5 @@
   const pref = navigator.preferences?.colorScheme;
   if (!pref) return; // Behind a flag, or not a secure context.
 
-  // Optional, safe to delete: hide the page for the few ms before the
-  // override lands, so it never paints the wrong scheme first. Three
-  // independent removals, so a rejection can't leave the page blank.
-  const style = document.createElement('style');
-  style.textContent = ':root { visibility: hidden !important; }';
-  (document.head || document.documentElement).appendChild(style);
-  const reveal = () => style.remove();
-  setTimeout(reveal, 100);
-  requestAnimationFrame(reveal);
-
-  Promise.resolve(pref.requestOverride('dark')).catch(() => {}).finally(reveal);
+  Promise.resolve(pref.requestOverride('dark')).catch(() => {});
 })();
